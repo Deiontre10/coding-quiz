@@ -48,6 +48,14 @@ var correctChoices = ["", "", "", "",];
 
 var displayQuestion = function() {
     questionEl.querySelector("h2").textContent = questions[cursor].text;
+    questionEl.querySelector("#possible").innerHTML = null;
+    for (var buttonLabel of questions[cursor].possible) {
+        var buttonEl = document.createElement("button");
+        buttonEl.style.margin = "30px";
+        buttonEl.textContent = buttonLabel;
+        buttonEl.dataset.choice = buttonLabel[0];
+        questionEl.querySelector("#possible").appendChild(buttonEl);
+    }
 }
 var advance = function() {
     if (cursor < questions.length - 1) {
