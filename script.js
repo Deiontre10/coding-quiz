@@ -57,12 +57,17 @@ var displayQuestion = function() {
         questionEl.querySelector("#possible").appendChild(buttonEl);
     }
 }
-var advance = function() {
-    if (cursor < questions.length - 1) {
-        cursor++;
-    }
-    displayQuestion();
-}
+var advance = function(event) {
+    var element = event.target;
+    if (element.matches(".question button")) {
+        var answer = element.dataset.choice === correctChoices[cursor];
+        if (cursor < questions.length - 1) {
+            cursor++;
+            questionEl.dataset.index = cursor;
+        };
+        displayQuestion();
+    };
+};
 
 questionEl.addEventListener("click", advance)
 
