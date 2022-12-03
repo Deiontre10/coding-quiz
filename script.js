@@ -44,8 +44,10 @@ var questions = [
     }
 ];
 
+var correctChoices = ["", "", "", "",];
+
 var displayQuestion = function() {
-    nextEl.textContent = questions[cursor];
+    questionEl.querySelector("h2").textContent = questions[cursor].text;
 }
 var advance = function() {
     if (cursor < questions.length - 1) {
@@ -54,6 +56,6 @@ var advance = function() {
     displayQuestion();
 }
 
-nextEl.addEventListener("click", advance)
+questionEl.addEventListener("click", advance)
 
 displayQuestion();
