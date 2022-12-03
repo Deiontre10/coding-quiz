@@ -1,9 +1,47 @@
-var nextEl = document.querySelector("#next");
+var questionEl = document.querySelector(".question");
 var cursor = 0;
-var questions = ["How much wood could a woodchuck chuck?",
-"Did you have your break today?",
-"Do you like ice cream?",
-"Whats your favorite pizza topping?"
+
+var questions = [
+    {
+        text: "How much wood could a woodchuck chuck?",
+        correctAnswer: "a",
+        possible : [
+            "a.",
+            "b.",
+            "c.",
+            "d.",
+        ],
+    },
+    {
+        text: "Did you have your break today?",
+        correctAnswer: "a",
+        possible : [
+            "a.",
+            "b.",
+            "c.",
+            "d.",
+        ],
+    },
+    {
+        text: "Do you like ice cream?",
+        correctAnswer: "a",
+        possible : [
+            "a.",
+            "b.",
+            "c.",
+            "d.",
+        ],
+    },
+    {
+        text: "Whats your favorite pizza topping?",
+        correctAnswer: "a",
+        possible : [
+            "a.",
+            "b.",
+            "c.",
+            "d.",
+        ],
+    }
 ];
 
 var displayQuestion = function() {
