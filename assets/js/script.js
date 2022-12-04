@@ -1,5 +1,7 @@
 var questionEl = document.querySelector(".question");
 var cursor = 0;
+var timeLeft = 80;
+var timeEl = document.getElementById("timer");
 
 var questions = [
     {
@@ -45,6 +47,24 @@ var questions = [
 ];
 
 var correctChoices = ["", "", "", "",];
+
+var displayTime = function() {
+  timeEl.textContent = "Time Left: " + timeLeft;
+}
+
+var setTime = function() {
+    displayTime();
+    var countdown = setInterval(function() {
+      timeLeft--;
+      displayTime();
+  
+      if(timeLeft === 0) {
+        clearInterval(countdown);
+      }
+  
+    }, 1000);
+  }
+setTime();
 
 var displayQuestion = function() {
     questionEl.querySelector("h2").textContent = questions[cursor].text;
