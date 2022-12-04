@@ -2,6 +2,9 @@ var questionEl = document.querySelector(".question");
 var cursor = 0;
 var timeLeft = 80;
 var timeEl = document.getElementById("timer");
+var headerEl = document.querySelector("header")
+headerEl.style.display = "flex";
+headerEl.style.justifyContent = "space-between";
 
 var questions = [
     {
@@ -46,7 +49,13 @@ var questions = [
     }
 ];
 
-var correctChoices = ["", "", "", "",];
+var correctChoices = ["d.", "a.", "c.", "b.",];
+
+var init = function(event) {
+    event.preventDefault();
+    // var state = element.getAttribute("data-state");
+   
+}
 
 var displayTime = function() {
   timeEl.textContent = "Time Left: " + timeLeft;
@@ -67,6 +76,7 @@ var setTime = function() {
 setTime();
 
 var displayQuestion = function() {
+    // init();
     questionEl.querySelector("h2").textContent = questions[cursor].text;
     questionEl.querySelector("#possible").innerHTML = null;
     for (var buttonLabel of questions[cursor].possible) {
@@ -92,3 +102,4 @@ var advance = function(event) {
 questionEl.addEventListener("click", advance)
 
 displayQuestion();
+init();
