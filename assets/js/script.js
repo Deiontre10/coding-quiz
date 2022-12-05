@@ -2,7 +2,9 @@ var questionEl = document.querySelector(".question");
 var cursor = 0;
 var timeLeft = 80;
 var timeEl = document.getElementById("timer");
-var headerEl = document.querySelector("header")
+var headerEl = document.querySelector("header");
+var articleEl = document.querySelector("#welcome");
+var startButton = articleEl.querySelector("button");
 headerEl.style.display = "flex";
 headerEl.style.justifyContent = "space-between";
 
@@ -53,7 +55,9 @@ var correctChoices = ["d.", "a.", "c.", "b.",];
 
 var init = function(event) {
     event.preventDefault();
-    // var state = element.getAttribute("data-state");
+
+    articleEl.style.display = "block";
+    questionEl.style.display = "hidden";
    
 }
 
@@ -76,7 +80,7 @@ var setTime = function() {
 setTime();
 
 var displayQuestion = function() {
-    // init();
+    articleEl.style.display = "none";
     questionEl.querySelector("h2").textContent = questions[cursor].text;
     questionEl.querySelector("#possible").innerHTML = null;
     for (var buttonLabel of questions[cursor].possible) {
@@ -87,6 +91,7 @@ var displayQuestion = function() {
         questionEl.querySelector("#possible").appendChild(buttonEl);
     }
 }
+
 var advance = function(event) {
     var element = event.target;
     if (element.matches(".question button")) {
@@ -100,6 +105,7 @@ var advance = function(event) {
 };
 
 questionEl.addEventListener("click", advance)
+articleEl.addEventListener("click", displayQuestion)
 
-displayQuestion();
+// displayQuestion();
 init();
