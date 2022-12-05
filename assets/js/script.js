@@ -1,10 +1,11 @@
 var questionEl = document.querySelector(".question");
 var cursor = 0;
 var timeLeft = 80;
-var timeEl = document.getElementById("timer");
+var timeEl = document.querySelector("#timer");
 var headerEl = document.querySelector("header");
-var articleEl = document.querySelector("#welcome");
-var startButton = articleEl.querySelector("button");
+var mainEl = document.querySelector("#welcome");
+var startButton = mainEl.querySelector("button");
+var finalScores = document.querySelector("#final");
 headerEl.style.display = "flex";
 headerEl.style.justifyContent = "space-between";
 
@@ -51,13 +52,13 @@ var questions = [
     }
 ];
 
-var correctChoices = ["d.", "a.", "c.", "b.",];
+var correctChoices = ["d", "a", "c", "b",];
 
 var init = function(event) {
-    event.preventDefault();
-
-    articleEl.style.display = "block";
-    questionEl.style.display = "hidden";
+    // event.preventDefault();
+    mainEl.style.display = "block";
+    questionEl.style.display = "none";
+    finalScores.style.display = "none";
    
 }
 
@@ -71,16 +72,14 @@ var setTime = function() {
       timeLeft--;
       displayTime();
   
-      if(timeLeft === 0) {
+      if(timeLeft === 0 || questions.length === 0) {
         clearInterval(countdown);
       }
-  
     }, 1000);
   }
-setTime();
 
 var displayQuestion = function() {
-    articleEl.style.display = "none";
+    mainEl.style.display = "none";
     questionEl.querySelector("h2").textContent = questions[cursor].text;
     questionEl.querySelector("#possible").innerHTML = null;
     for (var buttonLabel of questions[cursor].possible) {
@@ -90,6 +89,7 @@ var displayQuestion = function() {
         buttonEl.dataset.choice = buttonLabel[0];
         questionEl.querySelector("#possible").appendChild(buttonEl);
     }
+    highscore();
 }
 
 var advance = function(event) {
@@ -101,11 +101,22 @@ var advance = function(event) {
             questionEl.dataset.index = cursor;
         };
         displayQuestion();
+        console.log(answer)
     };
 };
 
+var highscore = function () {
+    mainEl.style.display = "none";
+    questionEl.style.display = "none";
+    finalScores.style.display = "block";
+}
+
 questionEl.addEventListener("click", advance)
-articleEl.addEventListener("click", displayQuestion)
+startButton.addEventListener("click", function() {
+    setTime()
+    displayQuestion()
+})
+
 
 // displayQuestion();
-init();
+// init();
