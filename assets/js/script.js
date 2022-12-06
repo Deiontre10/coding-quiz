@@ -5,10 +5,15 @@ var mainEl = document.querySelector("#welcome");
 var startButton = mainEl.querySelector("button");
 var finalScores = document.querySelector("article");
 var retryEl = document.querySelector("#retry");
+var initialsEl = document.querySelector("#initials");
+var scoreEL = document.querySelector("#quizScore");
+var submitBtn = document.querySelector("#score");
+var highscorePage = document.querySelector("#allHighscores")
 
 var cursor = 0;
 var timeLeft = 80;
 var score = 0;
+var element = [];
 
 headerEl.style.display = "flex";
 headerEl.style.justifyContent = "space-between";
@@ -57,9 +62,10 @@ var questions = [
 var correctChoices = ["d", "a", "b", "c",];
 
 var init = function (event) {
-    event.preventDefault();
+    // event.preventDefault();
     mainEl.style.display = "block";
     questionEl.style.display = "none";
+    highscorePage.style.display ="none";
 }
 
 var displayTime = function () {
@@ -72,8 +78,7 @@ var setTime = function () {
         timeLeft--;
         displayTime();
         if (timeLeft === 0) {
-            clearInterval(countdown);
-            quizOver
+            quizOver();
         }
 
     }, 1000);
@@ -114,7 +119,6 @@ var advance = function (event) {
         } else {
             displayQuestion();
         }
-
     }
     
 };
@@ -123,17 +127,34 @@ var quizOver = function () {
     mainEl.style.display = "none";
     questionEl.style.display = "none";
     finalScores.style.display = "block";
-    if (timeLeft < 0) {
-        clearInterval(countdown);
+    scoreEL.textContent = timeLeft;
+    var highScore = {
+        score: timeLeft,
+        initials: initialsEl.ariaValueMax.trim(),
     }
+    var highScoreList = JSON.parse(localStorage.getItem("highScores")) || [];
+    highScoreList.push(highScore);
+    localStorage.setItem("highScores", JSON.stringify(highScoreList))
+
+    
+    clearInterval(countdown);
 };
 
 startButton.addEventListener("click", function () {
     setTime();
     displayQuestion();
 });
+
 questionEl.addEventListener("click", advance);
+
 retryEl.addEventListener("click", function () {
-    // finalScores.style.display = "hidden";
-    // init();
+    finalScores.style.display = "none";
+    setTime();
+    init();
 });
+
+submitBtn.addEventListener("click", function () {
+    highscorePage.style.display = "block";
+    finalScores.style.display = "none";
+
+})

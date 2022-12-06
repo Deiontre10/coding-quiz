@@ -15,7 +15,7 @@
 </head>
 <body>
     <header>
-        <a href="">View Highscores</a>
+        <a href="section">View Highscores</a>
         <nav id="timer"></nav>
     </header>
     <main id="welcome">
@@ -26,17 +26,22 @@
     <main class="question" data-index="0" data-state="hidden">
         <h2></h2>
         <p id="possible"></p>
-
-        
     </main>
     <article id="finished">
         <h2></h2>
         <div></div>
-        <p id="highscore">Your score is <span id="quizScore"></span></p>
-        <input type="text"/>
+        <p id="highscore"><h2>Your score is</h2> <span id="quizScore"></span></p>
+        <input id="initials" type="text" placeholder="Enter Initials"/>
         <button id="score">Submit Highscore</button>
-        <button id="retry">Retry Quiz</button>
+        
     </article>
+    <section id="allHighscores">
+        <h2>Highscores</h2>
+        <ul>
+            <li></li>
+        </ul>
+        <button id="retry">Retry Quiz</button>
+    </section>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

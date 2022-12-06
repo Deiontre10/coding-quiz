@@ -11,3 +11,8 @@ article {
 .question {
     text-align: center;
 }
+
+section {
+    display: none;
+    text-align: center;
+}
