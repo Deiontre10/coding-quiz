@@ -1,60 +1,59 @@
 var questionEl = document.querySelector(".question");
-var cursor = 0;
-var timeLeft = 80;
-var score = 0;
 var timeEl = document.querySelector("#timer");
 var headerEl = document.querySelector("header");
 var mainEl = document.querySelector("#welcome");
 var startButton = mainEl.querySelector("button");
 var finalScores = document.querySelector("article");
 
+var cursor = 0;
+var timeLeft = 80;
+var score = 0;
+
 headerEl.style.display = "flex";
 headerEl.style.justifyContent = "space-between";
 
 var questions = [
     {
-        text: "How much wood could a woodchuck chuck?",
-        correctAnswer: "a",
+        text: "Inside which HTML element do we put the JavaScript?",
+        correctAnswer: "d",
         possible: [
-            "a.",
-            "b.",
-            "c.",
-            "d.",
+            "a. <link>",
+            "b. <src>",
+            "c. <js>",
+            "d. <script>",
         ],
     },
     {
-        text: "Did you have your break today?",
+        text: "What is the correct syntax for referring to an external script called 'xxx.js'?",
         correctAnswer: "a",
         possible: [
-            "a.",
-            "b.",
-            "c.",
-            "d.",
+            "a. <script src='file.js'>",
+            "b. <script href='file.js'>",
+            "c. <script name='file.js'>",
+            "d. <script link='file.js'>",
         ],
     },
     {
-        text: "Do you like ice cream?",
-        correctAnswer: "a",
+        text: "The external JavaScript file must contain the <script> tag.",
+        correctAnswer: "b",
         possible: [
-            "a.",
-            "b.",
-            "c.",
-            "d.",
+            "a. True",
+            "b. False",
         ],
     },
     {
-        text: "Whats your favorite pizza topping?",
-        correctAnswer: "a",
+        text: "How do you write 'Hello World' in an alert box?",
+        correctAnswer: "c",
         possible: [
-            "a.",
-            "b.",
-            "c.",
-            "d.",
+            "a. alertWindow('Hello world');",
+            "b. prompt('Hello world');",
+            "c. alert('Hello world');",
+            "d. confirm('Hello world');",
         ],
     }
 ];
 
-var correctChoices = ["d", "a", "c", "b",];
+var correctChoices = ["d", "a", "b", "c",];
 
 var init = function (event) {
     event.preventDefault();
@@ -71,11 +70,11 @@ var setTime = function () {
     var countdown = setInterval(function () {
         timeLeft--;
         displayTime();
-
         if (timeLeft === 0) {
             clearInterval(countdown);
+            quizOver
         }
-        
+
     }, 1000);
 }
 
@@ -97,31 +96,35 @@ var advance = function (event) {
     var element = event.target;
     if (element.matches(".question button")) {
         var answer = element.dataset.choice === correctChoices[cursor];
-        if (cursor < questions.length + 1) {
-            cursor++;
+        if (cursor < questions.length - 1) {
             questionEl.dataset.index = cursor;
             displayQuestion();
-        };
-        if (answer === true) {
-            timeLeft += 10;
-        } else { 
-            if (answer === false || cursor > questions.length + 1) {
-                timeLeft -=10;
-            } else {
-                timeLeft == 0;
-                quizOver();
-                
-            }
         }
+        cursor++;
+        if (answer) {
+            timeLeft += 10;
+        } else if (!answer) {
+            timeLeft -= 10;
+        } else {
+            quizOver();
+        }
+        if (cursor == questions.length) {
+            quizOver();
+        } else {
+            displayQuestion();
+        }
+
     }
+    
 };
 
 var quizOver = function () {
     mainEl.style.display = "none";
     questionEl.style.display = "none";
-    timeEl.textContent = 0;
     finalScores.style.display = "block";
-
+    if (timeLeft < 0) {
+        clearInterval(countdown);
+    }
 }
 
 startButton.addEventListener("click", function () {
@@ -129,6 +132,3 @@ startButton.addEventListener("click", function () {
     displayQuestion();
 })
 questionEl.addEventListener("click", advance)
-
-
-// displayQuestion();

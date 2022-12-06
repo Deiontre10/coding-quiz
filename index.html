@@ -15,7 +15,7 @@
     </header>
     <main id="welcome">
         <h1>Coding Quiz</h1>
-        <p>Welcome to the code quiz. The rules are simple if you select the wrong answer you will 10 seconds. Your overall score is based upon how much time you have left.</p>
+        <p>Welcome to the code quiz. The rules are simple if you select the wrong answer you will lose 10 seconds and if you select the correct answer you will gain 10 seconds. Your overall score is based upon how much time you have left.</p>
         <button>Start</button>
     </main>
     <main class="question" data-index="0" data-state="hidden">
@@ -27,10 +27,10 @@
     <article id="finished">
         <h2></h2>
         <div></div>
-        <p  id="highscore"></p>
+        <p id="highscore">Your score is <span id="quizScore"></span></p>
         <input type="text"/>
-        <button id="score"></button>
-        <button id="retry"></button>
+        <button id="score">Submit Highscore</button>
+        <button id="retry">Retry Quiz</button>
     </article>
     <script src="./assets/js/script.js"></script>
 </body>
