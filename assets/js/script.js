@@ -4,6 +4,7 @@ var headerEl = document.querySelector("header");
 var mainEl = document.querySelector("#welcome");
 var startButton = mainEl.querySelector("button");
 var finalScores = document.querySelector("article");
+var retryEl = document.querySelector("#retry");
 
 var cursor = 0;
 var timeLeft = 80;
@@ -125,10 +126,14 @@ var quizOver = function () {
     if (timeLeft < 0) {
         clearInterval(countdown);
     }
-}
+};
 
 startButton.addEventListener("click", function () {
     setTime();
     displayQuestion();
-})
-questionEl.addEventListener("click", advance)
+});
+questionEl.addEventListener("click", advance);
+retryEl.addEventListener("click", function () {
+    // finalScores.style.display = "hidden";
+    // init();
+});
