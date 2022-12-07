@@ -2,18 +2,19 @@ var questionEl = document.querySelector(".question");
 var timeEl = document.querySelector("#timer");
 var headerEl = document.querySelector("header");
 var mainEl = document.querySelector("#welcome");
-var startButton = mainEl.querySelector("button");
-var finalScores = document.querySelector("article");
+var startButton = document.querySelector("#startQuiz");
+var finalScores = document.querySelector("#finished");
 var retryEl = document.querySelector("#retry");
 var initialsEl = document.querySelector("#initials");
 var scoreEL = document.querySelector("#quizScore");
 var submitBtn = document.querySelector("#score");
-var highscorePage = document.querySelector("#allHighscores")
+var highScorePage = document.querySelector("#allHighscores")
+var containerEl = document.querySelector("#container")
 
 var cursor = 0;
 var timeLeft = 80;
-var score = 0;
 var element = [];
+var timeInterval;
 
 headerEl.style.display = "flex";
 headerEl.style.justifyContent = "space-between";
@@ -64,8 +65,6 @@ var correctChoices = ["d", "a", "b", "c",];
 var init = function (event) {
     // event.preventDefault();
     mainEl.style.display = "block";
-    questionEl.style.display = "none";
-    highscorePage.style.display ="none";
 }
 
 var displayTime = function () {
@@ -74,21 +73,22 @@ var displayTime = function () {
 
 var setTime = function () {
     displayTime();
-    var countdown = setInterval(function () {
-        timeLeft--;
+    timeInterval = setInterval(function () {
         displayTime();
         if (timeLeft === 0) {
             quizOver();
-        }
+        } 
+        timeLeft--;
 
     }, 1000);
 }
 
 var displayQuestion = function () {
-    mainEl.style.display = "none";
+    var currentQuestion = questions[cursor];
 
-    questionEl.querySelector("h2").textContent = questions[cursor].text;
+    questionEl.querySelector("h2").textContent = currentQuestion.text;
     questionEl.querySelector("#possible").innerHTML = null;
+
     for (var buttonLabel of questions[cursor].possible) {
         var buttonEl = document.createElement("button");
         buttonEl.style.margin = "30px";
@@ -111,50 +111,72 @@ var advance = function (event) {
             timeLeft += 10;
         } else if (!answer) {
             timeLeft -= 10;
-        } else {
-            quizOver();
         }
-        if (cursor == questions.length) {
+        if (cursor >= questions.length) {
             quizOver();
+            return;
         } else {
             displayQuestion();
         }
     }
-    
+    displayQuestion();
 };
 
 var quizOver = function () {
-    mainEl.style.display = "none";
-    questionEl.style.display = "none";
+    console.log("display end screen")
+    hideScreens();
     finalScores.style.display = "block";
     scoreEL.textContent = timeLeft;
+
     var highScore = {
         score: timeLeft,
-        initials: initialsEl.ariaValueMax.trim(),
+        initials: initialsEl.value.trim(),
     }
     var highScoreList = JSON.parse(localStorage.getItem("highScores")) || [];
     highScoreList.push(highScore);
-    localStorage.setItem("highScores", JSON.stringify(highScoreList))
+    localStorage.setItem("highScores", JSON.stringify(highScoreList));
 
+    for (var i = 0; i < highScoreList.length; i++) {
+        var listEl = document.createElement("li");
+        listEl.textContent = highScoreList[i].initials + ": " + highScoreList[i].score;
+        highScorePage.querySelector("ul").appendChild(listEl);
+
+    }
     
-    clearInterval(countdown);
+    clearInterval(timeInterval);
+};
+
+var hideScreens = function () {
+    var sections = document.querySelectorAll("section");
+    console.log(sections);
+    for (var i = 0; i < sections.length; i++) {
+        sections[i].style.display = "none"
+    }
 };
 
 startButton.addEventListener("click", function () {
     setTime();
     displayQuestion();
+    hideScreens();
+    questionEl.style.display = "block";
 });
 
 questionEl.addEventListener("click", advance);
 
 retryEl.addEventListener("click", function () {
-    finalScores.style.display = "none";
+    console.log("display start screen")
+    hideScreens();
+    mainEl.style.display = "block";
     setTime();
     init();
+    displayQuestion();
 });
 
 submitBtn.addEventListener("click", function () {
-    highscorePage.style.display = "block";
-    finalScores.style.display = "none";
+    hideScreens();
+    highScorePage.style.display = "block";
+    
+});
 
-})
+hideScreens();
+mainEl.style.display = "block";
