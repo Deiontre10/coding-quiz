@@ -10,6 +10,7 @@ var scoreEL = document.querySelector("#quizScore");
 var submitBtn = document.querySelector("#score");
 var highScorePage = document.querySelector("#allHighscores")
 var containerEl = document.querySelector("#container")
+var clearScoresEl = document.querySelector("#clearScores")
 
 var cursor = 0;
 var timeLeft = 80;
@@ -123,7 +124,6 @@ var advance = function (event) {
 };
 
 var quizOver = function () {
-    console.log("display end screen")
     hideScreens();
     finalScores.style.display = "block";
     scoreEL.textContent = timeLeft;
@@ -165,17 +165,22 @@ questionEl.addEventListener("click", advance);
 
 retryEl.addEventListener("click", function () {
     console.log("display start screen")
-    hideScreens();
+    // hideScreens();
     mainEl.style.display = "block";
-    setTime();
-    init();
-    displayQuestion();
+    // setTime();
+    // init();
+    // displayQuestion();
+    window.location.reload();
 });
 
 submitBtn.addEventListener("click", function () {
     hideScreens();
     highScorePage.style.display = "block";
     
+});
+
+clearScoresEl.addEventListener("click", function () {
+    localStorage.clear();
 });
 
 hideScreens();
