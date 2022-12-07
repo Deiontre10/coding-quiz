@@ -32,7 +32,7 @@ var questions = [
         ],
     },
     {
-        text: "What is the correct syntax for referring to an external script called 'xxx.js'?",
+        text: "What is the correct syntax for referring to an external script called 'file.js'?",
         correctAnswer: "a",
         possible: [
             "a. <script src='file.js'>",
